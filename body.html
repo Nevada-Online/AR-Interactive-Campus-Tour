@@ -1,0 +1,801 @@
+<div id="container" class="collapsed">
+  <div class="outer">
+    <div id="closeButton" onclick="hideAll()">Close</div>
+  </div>
+  <div class="outer" id="contents"></div>
+
+</div>
+
+<div id="logo-container">
+  <img src="assets/University_Logo_RGB_block_n_blue.png" alt="Logo" />
+</div>
+
+<div id="category-menu">
+  <button
+    id="ActivitiesAndLandmarksBtn"
+    onclick="selectCategory('ActivitiesAndLandmarks')"
+    class="menu-button">
+    Activities & Landmarks
+  </button>
+  <button id="StudentServicesBtn" onclick="selectCategory('StudentServices')" class="menu-button">
+    Student Services
+  </button>
+  <button id="SchoolsBtn" onclick="selectCategory('Schools')" class="menu-button">Schools</button>
+  <button id="LibrariesBtn" onclick="selectCategory('Libraries')" class="menu-button">
+    Libraries
+  </button>
+</div>
+
+<a-scene
+  xrextras-gesture-detector
+  landing-page
+  xrextras-loading="
+    loadBackgroundColor: #003366;
+    loadImage: #NVLogo;
+    loadAnimation: pulse"
+  xrextras-runtime-error
+  renderer="colorManagement: true"
+  xrweb>
+  <a-assets>
+    <a-asset-item id="campusModel" src="assets/campus-rendoc-v1.glb"></a-asset-item>
+    <a-mixin
+      id="hotspot-text"
+      text="font: exo2bold; width: 5"
+      geometry="primitive: plane; width: 1.6; height: 0.4"
+      material="src: #rounded-plane; transparent: true;"
+      position="0 0.8 0"></a-mixin>
+    <a-mixin
+      id="hotspot-target"
+      geometry="primitive: octahedron; radius: 0.2;"
+      material="flatShading: true; color: rgb(44, 255, 5)"
+      animation__fadein="property: components.material.material.opacity; from: 0; to: 1; dur: 650; startEvents: fadeIn"
+      animation="property: components.material.material.opacity; from: 1; to: 0; dur: 650; startEvents: fadeOut"></a-mixin>
+    <img id="icon" src="./assets/rectangle-icon-sq.png" />
+    <img id="rounded-plane" src="assets/rounded-image-ps.png" />
+    <img id="NVLogo" src="assets/University_Logo_RGB_block_n_blue.png" />
+  </a-assets>
+
+  <!-- The raycaster will emit mouse events on scene objects specified with the cantap class -->
+  <a-camera id="camera" position="0 8 0" cursor="fuse: false; rayOrigin: mouse;"> </a-camera>
+
+  <a-entity
+    id="cursor"
+    tap-place-cursor
+    gltf-model="#rectangle"
+    scale="2 2 2"
+    reflections="type: static">
+    <a-plane
+      rotation="-90 0 0"
+      scale="3.3 3.3 3.3"
+      material="src: #icon; opacity: 0.5; roughness: 0.8; metalness: 0;">
+    </a-plane>
+  </a-entity>
+
+  <a-entity
+    light="
+      type: directional;
+      intensity: 0.4;
+      castShadow: true;
+      shadowMapHeight:2048;
+      shadowMapWidth:2048;
+      shadowCameraTop: 20;
+      shadowCameraBottom: -20;
+      shadowCameraRight: 20;
+      shadowCameraLeft: -20;
+      target: #model"
+    xrextras-attach="target: model; offset: 8 15 4"
+    position="1 4.3 2.5"
+    shadow>
+  </a-entity>
+
+  <a-light type="ambient" intensity="0.5"></a-light>
+
+  <a-entity
+    id="model"
+    gltf-model="#campusModel"
+    scale="0.5 0.5 0.5"
+    visible="false"
+    shadow="receive: false"
+    xrextras-hold-drag
+    xrextras-two-finger-rotate
+    xrextras-pinch-scale
+    reflections="type: realtime">
+    <a-entity id="ActivitiesAndLandmarks" visible="true">
+      <!--Hotspot #1-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="JCSU"
+        mixin="hotspot-target"
+        position="-0.5 1.3 -0.3"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="JCSU-child"
+          value="Joe Crowley Student Union"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+
+      <!--Hotspot #2-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="LEC"
+        mixin="hotspot-target"
+        position="-1.35 1.3 2.1"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="LEC-child"
+          value="Lawlor Events Center"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+
+      <!--Hotspot #3-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="WFC"
+        mixin="hotspot-target"
+        position="0.7 1.3 1.4"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="WFC-child"
+          value="E. L. Wiegand Fitness Center"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+
+      <!--Hotspot #4-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="MackayStadium"
+        mixin="hotspot-target"
+        position="-4 1.3 1.2"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="MackayStadium-child"
+          value="Mackay Stadium"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+
+      <!--Hotspot #5-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="SalaIntramural"
+        mixin="hotspot-target"
+        position="-5.2 1.3 -2"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="SalaIntramural-child"
+          value="Sala Intramural Fields"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+
+      <!--Hotspot #6-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="Quad"
+        mixin="hotspot-target"
+        position="7.9 1.3 -2.25"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="Quad-child"
+          value="The Quad"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+
+      <!--Hotspot #7-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="MH"
+        mixin="hotspot-target"
+        position="8.95 1.3 -2.6"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="MH-child"
+          value="Morrill Hall"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+
+      <!--Hotspot #8-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="EEL"
+        mixin="hotspot-target"
+        position="5 1.3 -3.8"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="EEL-child"
+          value="Earthquake Engineering Laboratory"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+
+      <!--Hotspot #9-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="FP"
+        mixin="hotspot-target"
+        position="-2.55 1.3 3.4"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="FP-child"
+          value="Fleischmann Planetarium"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+
+      <!--Hotspot #10-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="ManzanitaLake"
+        mixin="hotspot-target"
+        position="8.95 1.3 -0.7"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="ManzanitaLake-child"
+          value="Manzanita Lake"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+
+      <!--Hotspot #11-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="CFA"
+        mixin="hotspot-target"
+        position="4.2 1.3 0.28"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="CFA-child"
+          value="Church Fine Arts"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+
+      <!--Hotspot #12-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="WPP"
+        mixin="hotspot-target"
+        position="-6 1.3 -4"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="WPP-child"
+          value="Peccole Park"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+
+      <!--Hotspot #13-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="LRC"
+        mixin="hotspot-target"
+        position="-2 1.3 -0.9"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="LRC-child"
+          value="Lombardi Recreation Center"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+
+      <!--Hotspot #14-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="Hixson"
+        mixin="hotspot-target"
+        position="-2.8 1.3 -5.7"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="Hixson-child"
+          value="Hixson Softball Park"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+    </a-entity>
+
+    <a-entity id="StudentServices" visible="false">
+      <!--Hotspot #15-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="PSAC"
+        mixin="hotspot-target"
+        position="5.95 1.3 -0.65"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="PSAC-child"
+          value="Pennington Student Achievement Center"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+
+      <!--Hotspot #16-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="FSSB"
+        mixin="hotspot-target"
+        position="2.76 1.3 0.2"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="FSSB-child"
+          value="Fitzgerald Student Services"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+
+      <!--Hotspot #17-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="PS"
+        mixin="hotspot-target"
+        position="-3.43 1.3 4.07"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="PS-child"
+          value="Parking Services"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+    </a-entity>
+
+    <a-entity id="Schools" visible="false">
+      <!--Hotspot #18-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="RSJ"
+        mixin="hotspot-target"
+        position="3.7 1.3 -0.9"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="RSJ-child"
+          value="Reynolds School of Journalism"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+
+      <!--Hotspot #19-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="WRB"
+        mixin="hotspot-target"
+        position="2.8 1.3 -1.43"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="WRB-child"
+          value="Raggio Building"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+
+      <!--Hotspot #20-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="AB"
+        mixin="hotspot-target"
+        position="5.78 1.3 -1.75"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="AB-child"
+          value="Ansari Business Building"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+
+      <!--Hotspot #21-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="WPEB"
+        mixin="hotspot-target"
+        position="6.15 1.3 -4.67"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="WPEB-child"
+          value="Pennington Engineering Building"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+
+      <!--Hotspot #22-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="NJC"
+        mixin="hotspot-target"
+        position="1.4 1.3 -2.3"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="NJC-child"
+          value="National Judicial College"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+
+      <!--Hotspot #23-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="EMM"
+        mixin="hotspot-target"
+        position="4.8 1.3 -1.15"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="EMM-child"
+          value="Effie Mona Mack Building"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+
+      <!--Hotspot #24-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="MS"
+        mixin="hotspot-target"
+        position="8.45 1.3 -3"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="MS-child"
+          value="Mackay Sciences"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+
+      <!--Hotspot #25-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="SFB"
+        mixin="hotspot-target"
+        position="9.6 1.3 -3.45"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="SFB-child"
+          value="Fleischmann Building"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+
+      <!--Hotspot #26-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="EBB"
+        mixin="hotspot-target"
+        position="-5.95 1.3 0.55"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="EBB-child"
+          value="Edna Brigham Building"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+
+      <!--Hotspot #27-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="LME"
+        mixin="hotspot-target"
+        position="7.05 1.3 -2.95"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="LME-child"
+          value="Laxalt Mineral Engineering"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+
+      <!--Hotspot #28-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="LH"
+        mixin="hotspot-target"
+        position="6.55 1.3 -0.1"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="LH-child"
+          value="Lincoln Hall"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+    </a-entity>
+
+    <a-entity id="Libraries" visible="false">
+      <!--Hotspot #29-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="MIKC"
+        mixin="hotspot-target"
+        position="0.8 1.3 -1"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="MIKC-child"
+          value="Matthewson-IGT Knowledge Center"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"></a-text>
+      </a-entity>
+
+      <!--Hotspot #30-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="MM"
+        mixin="hotspot-target"
+        position="6.45 1.3 -1.75"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="MM-child"
+          value="Mackay Mines"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+
+      <!--Hotspot #31-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="PHS"
+        mixin="hotspot-target"
+        position="-6.9 1.3 -2.75"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="PHS-child"
+          value="Pennington Health Sciences"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+    </a-entity>
+  </a-entity>
+
+  <!-- Adding the cantap class allows the ground to be clicked -->
+  <a-box
+    id="ground"
+    scale="1000 2 1000"
+    position="0 -1 0"
+    material="shader: shadow; transparent: true; opacity: 0.4"
+    shadow>
+  </a-box>
+</a-scene>

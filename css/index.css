@@ -1,0 +1,139 @@
+.hidden {
+  display: none !important;
+}
+
+/* Following design guidelines */
+body {
+  font-family: 'myriad-pro', 'minion-pro', Arial;
+}
+
+#recenterButtonContainer {
+  position: absolute;
+  width: 10vmin;
+  height: 10vmin;
+  right: 2vmax;
+  top: 2vmax;
+  pointer-events: auto;
+  z-index: 20;
+}
+
+#recenterButtonContainer img {
+  pointer-events: none;
+  max-height: 10vmin;
+  filter: drop-shadow(1px 1px 7px #00000026);
+}
+
+#container {
+  position: absolute;
+  max-height: 50vh;
+  left: 10%;
+  right: 10%;
+  bottom: -2vh;
+  border-radius: 2vh;
+  padding: 1vh 2vh 3vh;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  background-color: white;
+  transition: 0.35s;
+}
+
+#container.collapsed {
+  transform: translateY(10%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+#contents {
+  height: 100%;
+  max-height: 40vh;
+  overflow-y: auto;
+  text-align: justify;
+  font-size: 1rem;
+  flex-grow: 1;
+  padding-right: 10px;
+}
+
+#contents h1 {
+  text-align: left;
+}
+
+.outer {
+  flex: 0 0 auto;
+}
+
+#closeButton {
+  float: right;
+  padding: 0.25em;
+}
+
+#category-menu {
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  background-color: rgba(0, 0, 0, 0.5); /* Translucent black background */
+  border-radius: 10px;
+  padding: 5px;
+  z-index: 999;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 1s ease;
+  pointer-events: none;
+
+  display: flex;
+  flex-direction: column; /* Stack buttons vertically */
+  align-items: flex-start; /* Align buttons to left */
+  width: 160px; /* Adjust width to fit buttons */
+}
+
+.menu-button {
+  background-color: rgba(0, 51, 102, 0.5);
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  margin: 1px 0;
+  font-family: 'MyriadPro', sans-serif;
+  font-size: 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s ease;
+  width: 94%; /* Make the buttons fit the menu container */
+  text-align: center;
+}
+
+.menu-button:hover {
+  background-color: rgba(0, 0, 139, 0.5);
+}
+
+.menu-button.selected {
+  background-color: rgba(55, 62, 69, 0.7); /* Light blue background when selected */
+  color: white;
+}
+
+.menu-button.selected,
+.menu-button {
+  font-weight: normal;
+  text-decoration: none;
+}
+
+#logo-container {
+  position: absolute;
+  top: 2%; 
+  left: 2%;
+  width: 75px;
+  height: auto;
+  background-color: rgba(0, 0, 0, 0.5); /* Translucent black background */
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* Resize the logo image */
+#logo-container img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 1px;
+}
