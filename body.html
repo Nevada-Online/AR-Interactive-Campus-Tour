@@ -1,34 +1,47 @@
+<!-- Add the tap-place component to the scene so it has an effect -->
 <div id="container" class="collapsed">
   <div class="outer">
     <div id="closeButton" onclick="hideAll()">Close</div>
   </div>
   <div class="outer" id="contents"></div>
-
 </div>
 
 <div id="logo-container">
   <img src="assets/University_Logo_RGB_block_n_blue.png" alt="Logo" />
 </div>
 
-<div id="category-menu">
-  <button
-    id="ActivitiesAndLandmarksBtn"
-    onclick="selectCategory('ActivitiesAndLandmarks')"
-    class="menu-button">
-    Activities & Landmarks
-  </button>
-  <button id="StudentServicesBtn" onclick="selectCategory('StudentServices')" class="menu-button">
-    Student Services
-  </button>
-  <button id="SchoolsBtn" onclick="selectCategory('Schools')" class="menu-button">Schools</button>
-  <button id="LibrariesBtn" onclick="selectCategory('Libraries')" class="menu-button">
-    Libraries
-  </button>
+<div id="promptBox" style="display: block">
+  <span id="promptText"></span>
+</div>
+
+<div id="tiltCheckBox" style="display: hidden">
+    <div class="tilt-content">
+        <img src="assets/images/tiltcheck.png" class="tilt-image">
+        <span id="tiltCheckText">Tilt your phone up for the best experience!</span>
+    </div>
+</div>
+
+
+<div id="recenterButtonContainer" class="hidden">
+  <img src="assets/recenter.png">
+</div>
+
+<div id="category-menu" category-menu="defaultCategory: Schools;">
+  <button id="SchoolsBtn" class="menu-button">Colleges & Schools</button>
+  <button id="ActivitiesAndLandmarksBtn" class="menu-button">Activities & Landmarks</button>
+  <button id="StudentServicesBtn" class="menu-button">Student Services</button>
+  <div class="arrow" id="arrow-container" style="display: none">
+    <img src="assets/Red_Arrow.png" alt="Arrow" />
+  </div>
 </div>
 
 <a-scene
   xrextras-gesture-detector
+  recenter-button
   landing-page
+  prompt-flow
+  device-tilt-check
+  category-menu
   xrextras-loading="
     loadBackgroundColor: #003366;
     loadImage: #NVLogo;
@@ -50,8 +63,9 @@
       material="flatShading: true; color: rgb(44, 255, 5)"
       animation__fadein="property: components.material.material.opacity; from: 0; to: 1; dur: 650; startEvents: fadeIn"
       animation="property: components.material.material.opacity; from: 1; to: 0; dur: 650; startEvents: fadeOut"></a-mixin>
-    <img id="icon" src="./assets/rectangle-icon-sq.png" />
+    <img id="icon" src="./assets/Pink_Neon_Outline.png" />
     <img id="rounded-plane" src="assets/rounded-image-ps.png" />
+    <img id="arrow" src="assets/Red_Arrow.png" />
     <img id="NVLogo" src="assets/University_Logo_RGB_block_n_blue.png" />
   </a-assets>
 
@@ -67,7 +81,7 @@
     <a-plane
       rotation="-90 0 0"
       scale="3.3 3.3 3.3"
-      material="src: #icon; opacity: 0.5; roughness: 0.8; metalness: 0;">
+      material="src: #icon; opacity: 0.9; roughness: 0.8; metalness: 0;">
     </a-plane>
   </a-entity>
 
@@ -408,6 +422,71 @@
           visible="false"
           tap-close></a-text>
       </a-entity>
+
+            <!--Hotspot #29-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="MIKC"
+        mixin="hotspot-target"
+        position="0.8 1.3 -1"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="MIKC-child"
+          value="Matthewson-IGT Knowledge Center"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"></a-text>
+      </a-entity>
+
+      <!--Hotspot #30-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="MM"
+        mixin="hotspot-target"
+        position="6.45 1.3 -1.75"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="MM-child"
+          value="Mackay Mines"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
+
+      <!--Hotspot #31-->
+      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
+      <a-entity
+        id="PHS"
+        mixin="hotspot-target"
+        position="-6.9 1.3 -2.75"
+        rotation="0 0 0"
+        scale="1 1 1"
+        look-at="#camera"
+        class="cantap"
+        tap-hotspot>
+        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
+        <!-- value needs to be whatever you want the title to be in the text -->
+        <a-text
+          id="PHS-child"
+          value="Pennington Health Sciences"
+          align="center"
+          mixin="hotspot-text"
+          visible="false"
+          tap-close></a-text>
+      </a-entity>
     </a-entity>
 
     <a-entity id="StudentServices" visible="false">
@@ -721,74 +800,6 @@
           tap-close></a-text>
       </a-entity>
     </a-entity>
-
-    <a-entity id="Libraries" visible="false">
-      <!--Hotspot #29-->
-      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
-      <a-entity
-        id="MIKC"
-        mixin="hotspot-target"
-        position="0.8 1.3 -1"
-        rotation="0 0 0"
-        scale="1 1 1"
-        look-at="#camera"
-        class="cantap"
-        tap-hotspot>
-        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
-        <!-- value needs to be whatever you want the title to be in the text -->
-        <a-text
-          id="MIKC-child"
-          value="Matthewson-IGT Knowledge Center"
-          align="center"
-          mixin="hotspot-text"
-          visible="false"></a-text>
-      </a-entity>
-
-      <!--Hotspot #30-->
-      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
-      <a-entity
-        id="MM"
-        mixin="hotspot-target"
-        position="6.45 1.3 -1.75"
-        rotation="0 0 0"
-        scale="1 1 1"
-        look-at="#camera"
-        class="cantap"
-        tap-hotspot>
-        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
-        <!-- value needs to be whatever you want the title to be in the text -->
-        <a-text
-          id="MM-child"
-          value="Mackay Mines"
-          align="center"
-          mixin="hotspot-text"
-          visible="false"
-          tap-close></a-text>
-      </a-entity>
-
-      <!--Hotspot #31-->
-      <!-- id NEEDS TO MATCH THE KEY IN hotspotDescriptions -->
-      <a-entity
-        id="PHS"
-        mixin="hotspot-target"
-        position="-6.9 1.3 -2.75"
-        rotation="0 0 0"
-        scale="1 1 1"
-        look-at="#camera"
-        class="cantap"
-        tap-hotspot>
-        <!-- id NEEDS TO MATCH THE format: "{a-entity id}-child" -->
-        <!-- value needs to be whatever you want the title to be in the text -->
-        <a-text
-          id="PHS-child"
-          value="Pennington Health Sciences"
-          align="center"
-          mixin="hotspot-text"
-          visible="false"
-          tap-close></a-text>
-      </a-entity>
-    </a-entity>
-  </a-entity>
 
   <!-- Adding the cantap class allows the ground to be clicked -->
   <a-box

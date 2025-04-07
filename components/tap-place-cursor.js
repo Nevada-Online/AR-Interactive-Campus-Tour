@@ -1,12 +1,15 @@
 // Component that places trees at cursor location when screen is tapped
 const tapPlaceCursorComponent = {
   init() {
+    // const {sceneEl} = this.el
+    this.scene = this.el.sceneEl
     this.raycaster = new THREE.Raycaster()
     this.camera = document.getElementById('camera')
     this.threeCamera = this.camera.getObject3D('camera')
     this.ground = document.getElementById('ground')
     this.cursor = document.getElementById('cursor')
     this.model = document.getElementById('model')
+    // this.prompt = document.getElementById('promptText')
 
     let hasPlacedModel = false
 
@@ -18,6 +21,8 @@ const tapPlaceCursorComponent = {
     this.el.sceneEl.addEventListener('click', (event) => {
       if (hasPlacedModel !== true) {
         hasPlacedModel = true
+
+        this.scene.emit('dismissPrompt1')
 
         this.model.setAttribute('position', this.el.object3D.position)
         this.model.setAttribute('visible', 'true')
@@ -31,7 +36,7 @@ const tapPlaceCursorComponent = {
         categoryMenu.style.pointerEvents = 'auto'  // Enable interaction
 
         // Select "Activities & Landmarks" category by default
-        window.selectCategory('ActivitiesAndLandmarks')
+        // window.selectCategory('ActivitiesAndLandmarks')
 
         // Add raycaster to camera
         this.camera.setAttribute('raycaster', 'objects: .cantap')
